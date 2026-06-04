@@ -11,29 +11,73 @@
 <!-- RULES MODAL -->
 <div id="rulesModal" class="modal">
     <div class="modal-content">
+
         <h1>Genetics Guess Who</h1>
 
-        <h2>How to Play</h2>
+        <h2>How to Play / Játékszabályok</h2>
 
         <p>
-            One hidden child has been selected. Your task is to find them.
+            In this game, one child is secretly selected from a group of 20.
+            Your goal is to identify that child using logic and genetics.
         </p>
 
         <p>
-            Ask yes/no questions about the child's parents to narrow down the possibilities.
+            You do NOT guess randomly. Instead, you ask yes/no questions about
+            the child's parents to deduce which child must be correct.
         </p>
 
         <p>
-            Select a child and click "Guess Selected Child" when ready.
+            Example questions:
+            "Does the father have blue eyes?"
+            "Does the mother have freckles?"
         </p>
 
-        <h2>Disclaimer</h2>
+        <p>
+            Each child has traits inherited from their parents using simplified
+            genetic rules.
+        </p>
+
+        <h2>Genetics Explanation / Genetikai alapok</h2>
+
+        <p>
+            <strong>Dominant trait (domináns tulajdonság):</strong>
+            If present, it appears in the phenotype even if only one allele is inherited.
+        </p>
+
+        <p>
+            <strong>Recessive trait (recesszív tulajdonság):</strong>
+            Only appears if both inherited alleles are recessive.
+        </p>
+
+        <p>
+            <strong>Incomplete dominance (részleges dominancia):</strong>
+            Both alleles influence the trait, producing a blended result.
+        </p>
+
+        <p>
+            <strong>Codominance (kodominancia):</strong>
+            Both alleles are expressed simultaneously.
+        </p>
+
+        <p>
+            <strong>Multiple alleles (többszörös allélok):</strong>
+            More than two allele variants exist for a trait.
+        </p>
+
+        <h2>Important / Fontos</h2>
 
         <p class="disclaimer">
-            This game uses simplified genetic models for educational purposes only.
+            This model is simplified for educational use. Real human genetics is
+            far more complex and influenced by many genes and environmental factors.
+        </p>
+
+        <p class="disclaimer">
+            A játék egyszerűsített genetikai modellt használ oktatási célra.
+            A valós öröklődés sokkal összetettebb.
         </p>
 
         <button id="startGameBtn">Start Game</button>
+
     </div>
 </div>
 
@@ -55,14 +99,43 @@
 
         <section class="panelSection">
 
-            <h2>Inheritance Models</h2>
+            <h2>Inheritance Models / Öröklődési Mintázatok</h2>
 
-            <div class="inheritanceBox">Hair Colour — Multiple Alleles</div>
-            <div class="inheritanceBox">Eye Colour — Incomplete Dominance</div>
-            <div class="inheritanceBox">Face Shape — Dominant / Recessive</div>
-            <div class="inheritanceBox">Nose Shape — Dominant / Recessive</div>
-            <div class="inheritanceBox">Glasses — Dominant / Recessive</div>
-            <div class="inheritanceBox">Freckles — Codominance</div>
+            <div class="inheritanceBox">
+                <strong>Hair Colour / Hajszín</strong><br>
+                Multiple alleles / Többszörös allélok<br>
+                No dominance hierarchy in reality — simplified allele set in this game
+            </div>
+
+            <div class="inheritanceBox">
+                <strong>Eye Colour / Szemszín</strong><br>
+                Incomplete dominance / Intermedier<br>
+                Blue [kék] + Brown [barna]  → Green [zöld]
+            </div>
+
+            <div class="inheritanceBox">
+                <strong>Face Shape / Arcforma</strong><br>
+                Dominant / recessive / Domináns–Recesszív<br>
+                Round (dominant) / Kerek (domináns) > Square (recessive) / Szögletes (recesszív)
+            </div>
+
+            <div class="inheritanceBox">
+                <strong>Nose Shape / Orrforma</strong><br>
+                Dominant / recessive / Domináns–Recesszív<br>
+                Pointy (dominant) / Hegyes (domináns) > Round (recessive) / Kerek (recesszív)
+            </div>
+
+            <div class="inheritanceBox">
+                <strong>Glasses / Szemüveg</strong><br>
+                Dominant / recessive / Domináns–Recesszív<br>
+                Wearing glasses (dominant) / Szemüveges (domináns)
+            </div>
+
+            <div class="inheritanceBox">
+                <strong>Freckles / Szeplők</strong><br>
+                Codominance / Kodominancia<br>
+                If parent has it, child has it too / Ha a szülőnek van, a gyereknek is lesz
+            </div>
 
         </section>
 
