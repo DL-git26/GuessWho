@@ -55,6 +55,22 @@ window.addEventListener("load", async () => {
 
     renderTraits();
 
+    // Setup parent button event listeners
+    document.querySelectorAll("[data-parent]").forEach(btn => {
+
+        btn.addEventListener("click", () => {
+
+            selectedParent = btn.dataset.parent;
+
+            document.querySelectorAll("[data-parent]")
+                .forEach(b => b.classList.remove("selected"));
+
+            btn.classList.add("selected");
+
+        });
+
+    });
+
 });
 
 // ===============================
@@ -244,25 +260,6 @@ function buildQuestion() {
     return `Does the ${selectedParent} have ${selectedValue} ${formatTrait(selectedTrait)}? (Trait: ${selectedTrait})`;
 
 }
-
-// ===============================
-// PARENT BUTTONS
-// ===============================
-
-document.querySelectorAll("[data-parent]").forEach(btn => {
-
-    btn.addEventListener("click", () => {
-
-        selectedParent = btn.dataset.parent;
-
-        document.querySelectorAll("[data-parent]")
-            .forEach(b => b.classList.remove("selected"));
-
-        btn.classList.add("selected");
-
-    });
-
-});
 
 // ===============================
 // GUESS
