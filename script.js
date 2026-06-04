@@ -241,7 +241,7 @@ askQuestionBtn.addEventListener("click", () => {
 
 function buildQuestion() {
 
-    return `Does the ${selectedParent} have ${selectedValue} ${formatTrait(selectedTrait)}?`;
+    return `Does the ${selectedParent} have ${selectedValue} ${formatTrait(selectedTrait)}? (Trait: ${selectedTrait})`;
 
 }
 
