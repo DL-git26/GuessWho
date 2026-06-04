@@ -1,0 +1,158 @@
+[
+  {
+    "id": 1,
+    "image": "child_01.png",
+    "hair": "brown",
+    "eyes": "green",
+    "faceShape": "round",
+    "nose": "pointy",
+    "glasses": true,
+    "freckles": false,
+    "father": {
+      "hair": "black",
+      "eyes": "blue",
+      "faceShape": "square",
+      "nose": "round",
+      "glasses": false,
+      "freckles": true
+    },
+    "mother": {
+      "hair": "brown",
+      "eyes": "green",
+      "faceShape": "round",
+      "nose": "pointy",
+      "glasses": true,
+      "freckles": false
+    }
+  },
+  {
+    "id": 2,
+    "image": "child_02.png",
+    "hair": "blond",
+    "eyes": "blue",
+    "faceShape": "square",
+    "nose": "round",
+    "glasses": false,
+    "freckles": true,
+    "father": {
+      "hair": "blond",
+      "eyes": "grey",
+      "faceShape": "round",
+      "nose": "pointy",
+      "glasses": true,
+      "freckles": true
+    },
+    "mother": {
+      "hair": "ginger",
+      "eyes": "blue",
+      "faceShape": "square",
+      "nose": "round",
+      "glasses": false,
+      "freckles": false
+    }
+  },
+  {
+    "id": 3,
+    "image": "child_03.png",
+    "hair": "black",
+    "eyes": "brown",
+    "faceShape": "round",
+    "nose": "round",
+    "glasses": true,
+    "freckles": true,
+    "father": {
+      "hair": "brown",
+      "eyes": "brown",
+      "faceShape": "square",
+      "nose": "pointy",
+      "glasses": true,
+      "freckles": false
+    },
+    "mother": {
+      "hair": "black",
+      "eyes": "green",
+      "faceShape": "round",
+      "nose": "round",
+      "glasses": true,
+      "freckles": true
+    }
+  },
+  {
+    "id": 4,
+    "image": "child_04.png",
+    "hair": "ginger",
+    "eyes": "grey",
+    "faceShape": "square",
+    "nose": "pointy",
+    "glasses": false,
+    "freckles": false,
+    "father": {
+      "hair": "ginger",
+      "eyes": "grey",
+      "faceShape": "round",
+      "nose": "round",
+      "glasses": false,
+      "freckles": false
+    },
+    "mother": {
+      "hair": "blond",
+      "eyes": "blue",
+      "faceShape": "square",
+      "nose": "pointy",
+      "glasses": true,
+      "freckles": true
+    }
+  },
+  {
+    "id": 5,
+    "image": "child_05.png",
+    "hair": "brown",
+    "eyes": "blue",
+    "faceShape": "round",
+    "nose": "round",
+    "glasses": true,
+    "freckles": false,
+    "father": {
+      "hair": "brown",
+      "eyes": "green",
+      "faceShape": "square",
+      "nose": "pointy",
+      "glasses": false,
+      "freckles": true
+    },
+    "mother": {
+      "hair": "black",
+      "eyes": "blue",
+      "faceShape": "round",
+      "nose": "round",
+      "glasses": true,
+      "freckles": false
+    }
+  },
+  {
+    "id": 6,
+    "image": "child_06.png",
+    "hair": "black",
+    "eyes": "green",
+    "faceShape": "square",
+    "nose": "pointy",
+    "glasses": false,
+    "freckles": true,
+    "father": {
+      "hair": "black",
+      "eyes": "brown",
+      "faceShape": "square",
+      "nose": "pointy",
+      "glasses": true,
+      "freckles": false
+    },
+    "mother": {
+      "hair": "ginger",
+      "eyes": "green",
+      "faceShape": "round",
+      "nose": "round",
+      "glasses": false,
+      "freckles": true
+    }
+  }
+]
