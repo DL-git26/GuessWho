@@ -253,13 +253,7 @@ button:hover {
     background: #e2e8f0;
 }
 
-.traitBtn.selected {
-    background: #2563eb;
-    color: white;
-    border-color: #2563eb;
-}
-
-.valueBtn.selected {
+.choiceBtn.selected {
     background: #2563eb;
     color: white;
     border-color: #2563eb;
