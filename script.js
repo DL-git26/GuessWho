@@ -155,6 +155,12 @@ function renderTraits() {
             selectedTrait = trait;
             selectedValue = null;
 
+            // reset UI selection
+            document.querySelectorAll("#traitButtons .choiceBtn")
+                .forEach(b => b.classList.remove("selected"));
+
+            btn.classList.add("selected");
+
             renderValues(trait);
 
         };
@@ -180,6 +186,11 @@ function renderValues(trait) {
         btn.onclick = () => {
 
             selectedValue = value;
+
+            document.querySelectorAll("#valueButtons .choiceBtn")
+                .forEach(b => b.classList.remove("selected"));
+
+            btn.classList.add("selected");
 
         };
 
