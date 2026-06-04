@@ -1,21 +1,26 @@
 // ===============================
-// GLOBALS
+// GLOBAL STATE
 // ===============================
 
 let childrenData = [];
 let secretChild = null;
+
 let selectedChildId = null;
+
+let selectedParent = null;
+let selectedTrait = null;
+let selectedValue = null;
 
 // ===============================
 // ELEMENTS
 // ===============================
 
 const grid = document.getElementById("characterGrid");
+
 const selectedCharacter = document.getElementById("selectedCharacter");
 
-const parentSelect = document.getElementById("parentSelect");
-const traitSelect = document.getElementById("traitSelect");
-const valueSelect = document.getElementById("valueSelect");
+const rulesModal = document.getElementById("rulesModal");
+const startGameBtn = document.getElementById("startGameBtn");
 
 const askQuestionBtn = document.getElementById("askQuestionBtn");
 
@@ -24,36 +29,31 @@ const answerDisplay = document.getElementById("answerDisplay");
 
 const guessBtn = document.getElementById("guessBtn");
 
-const rulesModal = document.getElementById("rulesModal");
-const startGameBtn = document.getElementById("startGameBtn");
+const traitButtons = document.getElementById("traitButtons");
+const valueButtons = document.getElementById("valueButtons");
 
 // ===============================
-// TRAIT VALUES
+// TRAITS
 // ===============================
 
-const traitOptions = {
+const traits = {
     hair: ["brown", "black", "blond", "ginger"],
-
     eyes: ["blue", "green", "brown", "grey"],
-
     faceShape: ["round", "square"],
-
     nose: ["round", "pointy"],
-
     glasses: ["yes", "no"],
-
     freckles: ["yes", "no"]
 };
 
 // ===============================
-// INITIALIZATION
+// INIT
 // ===============================
 
-window.addEventListener("load", () => {
+window.addEventListener("load", async () => {
 
-    populateValueDropdown();
+    await loadData();
 
-    loadData();
+    renderTraits();
 
 });
 
@@ -71,39 +71,13 @@ startGameBtn.addEventListener("click", () => {
 
 async function loadData() {
 
-    try {
+    const res = await fetch("data.json");
+    childrenData = await res.json();
 
-        const response = await fetch("data.json");
+    secretChild =
+        childrenData[Math.floor(Math.random() * childrenData.length)];
 
-        childrenData = await response.json();
-
-        chooseSecretChild();
-
-        renderGrid();
-
-    }
-    catch (error) {
-
-        console.error(error);
-
-        alert("Could not load data.json");
-
-    }
-
-}
-
-// ===============================
-// SECRET CHILD
-// ===============================
-
-function chooseSecretChild() {
-
-    const randomIndex =
-        Math.floor(Math.random() * childrenData.length);
-
-    secretChild = childrenData[randomIndex];
-
-    console.log("Secret Child:", secretChild);
+    renderGrid();
 
 }
 
@@ -119,33 +93,21 @@ function renderGrid() {
 
         const card = document.createElement("div");
 
-        card.classList.add("characterCard");
+        card.className = "characterCard";
 
         card.dataset.id = child.id;
 
         card.innerHTML = `
-            <img
-                class="characterImage"
-                src="images/${child.image}"
-                alt="Child ${child.id}"
-                onerror="this.src='images/placeholder.png'"
-            >
-
-            <div class="characterLabel">
-                Child ${child.id}
-            </div>
+            <img class="characterImage"
+                 src="images/${child.image}">
+            <div class="characterLabel">Child ${child.id}</div>
         `;
 
-        card.addEventListener("click", () => {
-            selectCard(child.id);
-        });
+        card.addEventListener("click", () => selectChild(child.id));
 
         card.addEventListener("contextmenu", (e) => {
-
             e.preventDefault();
-
             card.classList.toggle("eliminated");
-
         });
 
         grid.appendChild(card);
@@ -155,206 +117,184 @@ function renderGrid() {
 }
 
 // ===============================
-// CARD SELECTION
+// SELECTION
 // ===============================
 
-function selectCard(id) {
+function selectChild(id) {
 
     selectedChildId = id;
 
-    document
-        .querySelectorAll(".characterCard")
-        .forEach(card => card.classList.remove("selected"));
+    document.querySelectorAll(".characterCard")
+        .forEach(c => c.classList.remove("selected"));
 
-    const selectedCard =
-        document.querySelector(`[data-id='${id}']`);
+    document.querySelector(`[data-id="${id}"]`)
+        .classList.add("selected");
 
-    selectedCard.classList.add("selected");
-
-    selectedCharacter.textContent =
-        `Child ${id}`;
+    selectedCharacter.textContent = `Child ${id}`;
 
 }
 
 // ===============================
-// VALUE DROPDOWN
+// TRAIT BUTTONS
 // ===============================
 
-traitSelect.addEventListener("change", () => {
+function renderTraits() {
 
-    populateValueDropdown();
+    traitButtons.innerHTML = "";
 
-});
+    Object.keys(traits).forEach(trait => {
 
-function populateValueDropdown() {
+        const btn = document.createElement("button");
 
-    const trait = traitSelect.value;
+        btn.className = "choiceBtn";
 
-    valueSelect.innerHTML = "";
+        btn.textContent = formatTrait(trait);
 
-    traitOptions[trait].forEach(value => {
+        btn.onclick = () => {
 
-        const option = document.createElement("option");
+            selectedTrait = trait;
+            selectedValue = null;
 
-        option.value = value;
+            renderValues(trait);
 
-        option.textContent = capitalize(value);
+        };
 
-        valueSelect.appendChild(option);
+        traitButtons.appendChild(btn);
+
+    });
+
+}
+
+function renderValues(trait) {
+
+    valueButtons.innerHTML = "";
+
+    traits[trait].forEach(value => {
+
+        const btn = document.createElement("button");
+
+        btn.className = "choiceBtn";
+
+        btn.textContent = capitalize(value);
+
+        btn.onclick = () => {
+
+            selectedValue = value;
+
+        };
+
+        valueButtons.appendChild(btn);
 
     });
 
 }
 
 // ===============================
-// ASK QUESTION
+// QUESTION LOGIC
 // ===============================
 
-askQuestionBtn.addEventListener("click", askQuestion);
+askQuestionBtn.addEventListener("click", () => {
 
-function askQuestion() {
+    if (!selectedParent || !selectedTrait || !selectedValue) {
+        alert("Complete question selection first.");
+        return;
+    }
 
-    const parent = parentSelect.value;
-    const trait = traitSelect.value;
-    const value = valueSelect.value;
+    const question = buildQuestion();
 
-    let parentLabel =
-        parent === "father"
-            ? "father"
-            : "mother";
+    questionDisplay.textContent = question;
 
-    let questionText =
-        createQuestionText(parentLabel, trait, value);
+    const parentData = secretChild[selectedParent];
 
-    questionDisplay.textContent =
-        questionText;
-
-    let parentData =
-        secretChild[parent];
-
-    let actualValue =
-        parentData[trait];
+    const actual = parentData[selectedTrait];
 
     let answer;
 
-    if (typeof actualValue === "boolean") {
+    if (typeof actual === "boolean") {
 
-        const desired =
-            value === "yes";
+        answer = (selectedValue === "yes") === actual;
 
-        answer =
-            actualValue === desired;
+    } else {
 
-    }
-    else {
-
-        answer =
-            actualValue === value;
+        answer = actual === selectedValue;
 
     }
 
-    answerDisplay.textContent =
-        answer ? "Yes" : "No";
+    answerDisplay.textContent = answer ? "Yes" : "No";
 
-}
+});
 
 // ===============================
 // QUESTION TEXT
 // ===============================
 
-function createQuestionText(parent, trait, value) {
+function buildQuestion() {
 
-    switch (trait) {
-
-        case "hair":
-            return `Does the ${parent} have ${value} hair?`;
-
-        case "eyes":
-            return `Does the ${parent} have ${value} eyes?`;
-
-        case "faceShape":
-            return `Does the ${parent} have a ${value} face shape?`;
-
-        case "nose":
-            return `Does the ${parent} have a ${value} nose?`;
-
-        case "glasses":
-            return value === "yes"
-                ? `Does the ${parent} wear glasses?`
-                : `Does the ${parent} not wear glasses?`;
-
-        case "freckles":
-            return value === "yes"
-                ? `Does the ${parent} have freckles?`
-                : `Does the ${parent} not have freckles?`;
-
-        default:
-            return "Question";
-    }
+    return `Does the ${selectedParent} have ${selectedValue} ${formatTrait(selectedTrait)}?`;
 
 }
 
 // ===============================
-// GUESSING
+// PARENT BUTTONS
 // ===============================
 
-guessBtn.addEventListener("click", makeGuess);
+document.querySelectorAll("[data-parent]").forEach(btn => {
 
-function makeGuess() {
+    btn.addEventListener("click", () => {
 
-    if (selectedChildId === null) {
+        selectedParent = btn.dataset.parent;
 
+        document.querySelectorAll("[data-parent]")
+            .forEach(b => b.classList.remove("selected"));
+
+        btn.classList.add("selected");
+
+    });
+
+});
+
+// ===============================
+// GUESS
+// ===============================
+
+guessBtn.addEventListener("click", () => {
+
+    if (!selectedChildId) {
         alert("Select a child first.");
-
         return;
-
     }
 
-    if (selectedChildId === secretChild.id) {
+    if (selectedChildId == secretChild.id) {
 
-        alert(
-            `Correct! Child ${secretChild.id} was the hidden child.`
-        );
+        alert("Correct! You found the child.");
+        restart();
 
-        restartGame();
+    } else {
 
-    }
-    else {
-
-        alert(
-            `Incorrect. Try again.`
-        );
-
+        alert("Incorrect guess.");
     }
 
-}
+});
 
 // ===============================
 // RESTART
 // ===============================
 
-function restartGame() {
-
-    chooseSecretChild();
-
-    document
-        .querySelectorAll(".characterCard")
-        .forEach(card => {
-
-            card.classList.remove("selected");
-            card.classList.remove("eliminated");
-
-        });
+function restart() {
 
     selectedChildId = null;
 
-    selectedCharacter.textContent =
-        "No child selected";
+    secretChild =
+        childrenData[Math.floor(Math.random() * childrenData.length)];
+
+    document.querySelectorAll(".characterCard")
+        .forEach(c => c.classList.remove("selected", "eliminated"));
+
+    selectedCharacter.textContent = "No child selected";
 
     questionDisplay.textContent = "";
 
-    answerDisplay.textContent =
-        "Waiting for question...";
+    answerDisplay.textContent = "Waiting for question...";
 
 }
 
@@ -362,9 +302,13 @@ function restartGame() {
 // HELPERS
 // ===============================
 
-function capitalize(str) {
+function formatTrait(t) {
 
-    return str.charAt(0).toUpperCase()
-        + str.slice(1);
+    return t.replace(/([A-Z])/g, " $1")
+        .replace(/^./, s => s.toUpperCase());
 
+}
+
+function capitalize(s) {
+    return s.charAt(0).toUpperCase() + s.slice(1);
 }

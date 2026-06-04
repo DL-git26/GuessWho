@@ -8,163 +8,103 @@
 </head>
 <body>
 
-    <!-- RULES MODAL -->
-    <div id="rulesModal" class="modal">
-        <div class="modal-content">
+<!-- RULES MODAL -->
+<div id="rulesModal" class="modal">
+    <div class="modal-content">
+        <h1>Genetics Guess Who</h1>
+
+        <h2>How to Play</h2>
+
+        <p>
+            One hidden child has been selected. Your task is to find them.
+        </p>
+
+        <p>
+            Ask yes/no questions about the child's parents to narrow down the possibilities.
+        </p>
+
+        <p>
+            Select a child and click "Guess Selected Child" when ready.
+        </p>
+
+        <h2>Disclaimer</h2>
+
+        <p class="disclaimer">
+            This game uses simplified genetic models for educational purposes only.
+        </p>
+
+        <button id="startGameBtn">Start Game</button>
+    </div>
+</div>
+
+<div id="gameContainer">
+
+    <!-- LEFT -->
+    <div id="boardSection">
+
+        <div class="topBar">
             <h1>Genetics Guess Who</h1>
-
-            <h2>How to Play</h2>
-
-            <p>
-                One hidden child has been selected by the computer.
-            </p>
-
-            <p>
-                Your goal is to identify the correct child by asking
-                yes/no questions about the child's parents.
-            </p>
-
-            <p>
-                Use the question controls on the right side of the screen.
-                After receiving answers, eliminate children that can no
-                longer be the correct choice.
-            </p>
-
-            <p>
-                When you believe you know the answer, select a child and
-                click "Guess Selected Child".
-            </p>
-
-            <h2>Educational Disclaimer</h2>
-
-            <p class="disclaimer">
-                This game uses simplified inheritance models for educational
-                purposes only.
-            </p>
-
-            <p class="disclaimer">
-                Real human traits such as hair colour, eye colour, face shape,
-                freckles, glasses use, and nose shape do not inherit in the
-                simple ways shown here.
-            </p>
-
-            <p class="disclaimer">
-                Most real traits are influenced by many genes and
-                environmental factors. The inheritance patterns shown
-                in this game are intended only to demonstrate genetics
-                concepts.
-            </p>
-
-            <button id="startGameBtn">Start Game</button>
         </div>
+
+        <div id="characterGrid"></div>
+
     </div>
 
-    <div id="gameContainer">
+    <!-- RIGHT -->
+    <div id="sidePanel">
 
-        <!-- LEFT SIDE -->
-        <div id="boardSection">
+        <section class="panelSection">
 
-            <div class="topBar">
-                <h1>Genetics Guess Who</h1>
+            <h2>Inheritance Models</h2>
+
+            <div class="inheritanceBox">Hair Colour — Multiple Alleles</div>
+            <div class="inheritanceBox">Eye Colour — Incomplete Dominance</div>
+            <div class="inheritanceBox">Face Shape — Dominant / Recessive</div>
+            <div class="inheritanceBox">Nose Shape — Dominant / Recessive</div>
+            <div class="inheritanceBox">Glasses — Dominant / Recessive</div>
+            <div class="inheritanceBox">Freckles — Codominance</div>
+
+        </section>
+
+        <!-- QUESTION BUILDER -->
+        <section class="panelSection">
+
+            <h2>Ask a Question</h2>
+
+            <div class="label">Parent</div>
+            <div class="buttonRow">
+                <button class="choiceBtn" data-parent="father">Father</button>
+                <button class="choiceBtn" data-parent="mother">Mother</button>
             </div>
 
-            <div id="characterGrid"></div>
+            <div class="label">Trait</div>
+            <div id="traitButtons" class="buttonGrid"></div>
 
-        </div>
+            <div class="label">Value</div>
+            <div id="valueButtons" class="buttonGrid"></div>
 
-        <!-- RIGHT SIDE -->
-        <div id="sidePanel">
+            <button id="askQuestionBtn">Ask Question</button>
 
-            <section class="panelSection">
+            <div id="questionDisplay"></div>
+            <div id="answerDisplay">Waiting for question...</div>
 
-                <h2>Inheritance Models</h2>
+        </section>
 
-                <div class="inheritanceBox">
-                    <h3>Hair Colour</h3>
-                    <p>Multiple Alleles</p>
-                </div>
+        <section class="panelSection">
 
-                <div class="inheritanceBox">
-                    <h3>Eye Colour</h3>
-                    <p>Incomplete Dominance</p>
-                </div>
+            <h2>Guess</h2>
 
-                <div class="inheritanceBox">
-                    <h3>Face Shape</h3>
-                    <p>Dominant / Recessive</p>
-                </div>
+            <div id="selectedCharacter">No child selected</div>
 
-                <div class="inheritanceBox">
-                    <h3>Nose Shape</h3>
-                    <p>Dominant / Recessive</p>
-                </div>
+            <button id="guessBtn">Guess Selected Child</button>
 
-                <div class="inheritanceBox">
-                    <h3>Glasses</h3>
-                    <p>Dominant / Recessive</p>
-                </div>
-
-                <div class="inheritanceBox">
-                    <h3>Freckles</h3>
-                    <p>Codominance</p>
-                </div>
-
-            </section>
-
-            <section class="panelSection">
-
-                <h2>Ask a Question</h2>
-
-                <label>Parent</label>
-                <select id="parentSelect">
-                    <option value="father">Father</option>
-                    <option value="mother">Mother</option>
-                </select>
-
-                <label>Trait</label>
-                <select id="traitSelect">
-                    <option value="hair">Hair Colour</option>
-                    <option value="eyes">Eye Colour</option>
-                    <option value="faceShape">Face Shape</option>
-                    <option value="nose">Nose Shape</option>
-                    <option value="glasses">Glasses</option>
-                    <option value="freckles">Freckles</option>
-                </select>
-
-                <label>Value</label>
-                <select id="valueSelect"></select>
-
-                <button id="askQuestionBtn">
-                    Ask Question
-                </button>
-
-                <div id="questionDisplay"></div>
-
-                <div id="answerDisplay">
-                    Waiting for question...
-                </div>
-
-            </section>
-
-            <section class="panelSection">
-
-                <h2>Guess</h2>
-
-                <div id="selectedCharacter">
-                    No child selected
-                </div>
-
-                <button id="guessBtn">
-                    Guess Selected Child
-                </button>
-
-            </section>
-
-        </div>
+        </section>
 
     </div>
 
-    <script src="script.js"></script>
+</div>
+
+<script src="script.js"></script>
 
 </body>
 </html>
